@@ -329,7 +329,6 @@ void exeop()
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         flagset(opecode, mX);
-        printreg();
         pc = pc + 1;
         break;
     case 0x1:
@@ -337,7 +336,6 @@ void exeop()
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         flagset(opecode, mX);
-        printreg();
         pc = pc + 1;
         break;
     case 0x2:
@@ -345,7 +343,6 @@ void exeop()
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         acc = mem[regfile[mX]];
-        printreg();
         pc = pc + 1;
         break;
     case 0x3:
@@ -353,7 +350,6 @@ void exeop()
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         regfile[mX]=acc;
-        printreg();
         pc = pc + 1;
         break;
     case 0x4:
@@ -361,7 +357,6 @@ void exeop()
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         mem[regfile[mX]]=acc;
-        printreg();
         pc = pc + 1;
         break;
     case 0x5:
@@ -375,7 +370,6 @@ void exeop()
         autoassign('I', &mX, &mY, &cond, &interrupt, &immeditate, bits, 3);
         // printf("interrupt:%01x immeditate:%04x\n", interrupt, immeditate);
         acc=immeditate;
-        printreg();
         pc = pc + 3;
         break;
     case 0x6:
@@ -395,15 +389,13 @@ void exeop()
         {
             pc = pc + 2;
         }
-        
-        printreg();
+                
         break;
     case 0x7:
         printf("SRL\n");
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         flagset(opecode, mX);
-        printreg();
         pc = pc + 1;
         break;
     default:
@@ -438,23 +430,29 @@ int main(int argc, char const *argv[])
         {
             printf("File Open Succeed\n");
             printf("Read Byte Num:%d\n", byte_num);
+
+            while (1)
+            {
+                exeop();
+                printreg();
+                printf("\033[2J");
+                printf("\033[H");
+
+                for (int i = 0; i < 500000000; i++)
+                {
+                    ;
+                }
+            }
         }
     }
+    else
+    {
+        printf("No File Specified In The Arguments\n");
+    }
+    
 
     // printmem(0x0000);
     // printreg();
-
-    while (1)
-    {
-        exeop();
-
-        for (int i = 0; i < 500000000; i++)
-        {
-            ;
-        }
-        
-    }
-
     // exeop();
     // printf("Byte Size:%ld\n", sizeof(short int));
 
