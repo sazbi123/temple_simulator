@@ -3,6 +3,7 @@
 // 16bit addr , 2^16Byte
 #define mem_size 65536
 #define regfile_size 32
+#define display_mem_size 64
 
 unsigned char mem[mem_size] = {0};
 unsigned char flag = 0x00;
@@ -38,7 +39,7 @@ void printmem(unsigned int offset)
 
     for (; i < mem_size; i++)
     {
-        if (i % 16 == 15)
+        if (i % display_mem_size == display_mem_size-1)
         {
             printf("%02x\n", mem[i]);
             if (i != mem_size - 1)
@@ -435,6 +436,7 @@ int main(int argc, char const *argv[])
             while (1)
             {
                 exeop();
+                // printmem(0x0000);
                 printreg();
                 printf("\033[2J");
                 printf("\033[H");
