@@ -229,10 +229,11 @@ void flagset(unsigned char opecode, unsigned char mX)
     flag = flag_bits[2] * 4 + flag_bits[1] * 2 + flag_bits[0];
 }
 
-int judgebranch(unsigned char cond){
-    unsigned char flag_bits[8]={0};
+int judgebranch(unsigned char cond)
+{
+    unsigned char flag_bits[8] = {0};
 
-    splitbits(flag,flag_bits);
+    splitbits(flag, flag_bits);
 
     switch (cond)
     {
@@ -240,7 +241,7 @@ int judgebranch(unsigned char cond){
         return 0;
         break;
     case 1:
-        if (flag_bits[0]==1)
+        if (flag_bits[0] == 1)
         {
             return 1;
         }
@@ -250,7 +251,7 @@ int judgebranch(unsigned char cond){
         }
         break;
     case 2:
-        if (flag_bits[1]==1)
+        if (flag_bits[1] == 1)
         {
             return 1;
         }
@@ -260,7 +261,7 @@ int judgebranch(unsigned char cond){
         }
         break;
     case 3:
-        if (flag_bits[1]==1 || flag_bits[0]==1)
+        if (flag_bits[1] == 1 || flag_bits[0] == 1)
         {
             return 1;
         }
@@ -270,7 +271,7 @@ int judgebranch(unsigned char cond){
         }
         break;
     case 4:
-        if (flag_bits[2]==1)
+        if (flag_bits[2] == 1)
         {
             return 1;
         }
@@ -280,7 +281,7 @@ int judgebranch(unsigned char cond){
         }
         break;
     case 5:
-        if (flag_bits[2]==1 || flag_bits[0]==1)
+        if (flag_bits[2] == 1 || flag_bits[0] == 1)
         {
             return 1;
         }
@@ -290,7 +291,7 @@ int judgebranch(unsigned char cond){
         }
         break;
     case 6:
-        if (flag_bits[2]==1 || flag_bits[1]==1)
+        if (flag_bits[2] == 1 || flag_bits[1] == 1)
         {
             return 1;
         }
@@ -349,14 +350,14 @@ void exeop()
         printf("MOVE\n");
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
-        regfile[mX]=acc;
+        regfile[mX] = acc;
         pc = pc + 1;
         break;
     case 0x4:
         printf("SD\n");
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
-        mem[regfile[mX]]=acc;
+        mem[regfile[mX]] = acc;
         pc = pc + 1;
         break;
     case 0x5:
@@ -369,7 +370,7 @@ void exeop()
         splitbits(mem[pc + 2], bits);
         autoassign('I', &mX, &mY, &cond, &interrupt, &immeditate, bits, 3);
         // printf("interrupt:%01x immeditate:%04x\n", interrupt, immeditate);
-        acc=immeditate;
+        acc = immeditate;
         pc = pc + 3;
         break;
     case 0x6:
@@ -378,18 +379,18 @@ void exeop()
         // printf("mX:%01x mY:%01x cond:%01x\n", mX, mY, cond);
         splitbits(mem[pc + 1], bits);
         autoassign('J', &mX, &mY, &cond, &interrupt, &immeditate, bits, 2);
-        printf("mX:%01x mY:%01x cond:%01x\n", mX, mY, cond);
-        regfile[mX]=pc;
+        // printf("mX:%01x mY:%01x cond:%01x\n", mX, mY, cond);
+        regfile[mX] = pc;
 
         if (judgebranch(cond))
         {
-            pc=regfile[mY];
+            pc = regfile[mY];
         }
         else
         {
             pc = pc + 2;
         }
-                
+
         break;
     case 0x7:
         printf("SRL\n");
@@ -438,7 +439,14 @@ int main(int argc, char const *argv[])
                 printf("\033[2J");
                 printf("\033[H");
 
-                for (int i = 0; i < 500000000; i++)
+                // // Wait Time For My Windows PC
+                // for (int i = 0; i < 500000000; i++)
+                // {
+                //     ;
+                // }
+
+                // Wait Time For My Ubuntu PC
+                for (int i = 0; i < 2000000000; i++)
                 {
                     ;
                 }
@@ -449,7 +457,6 @@ int main(int argc, char const *argv[])
     {
         printf("No File Specified In The Arguments\n");
     }
-    
 
     // printmem(0x0000);
     // printreg();
