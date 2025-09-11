@@ -14,3 +14,4 @@ $(TARGET2): $(SRC2)
 clean:
 	rm -f $(TARGET)
 	rm -f $(TARGET2)
+	rm -f mem.bin

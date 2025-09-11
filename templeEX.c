@@ -30,30 +30,41 @@ int readop(const char *path, unsigned int offset)
     }
 }
 
-void printmem(unsigned int offset)
+void printmem()
 {
-    int i = offset;
+    // int i = offset;
+    FILE *fp = fopen("./mem.bin", "wb");
 
-    printf("-----Memory Dump (offset:0x%04x)-----\n", offset);
-    printf("0x%04x  ", i);
-
-    for (; i < mem_size; i++)
+    if (fp == NULL)
     {
-        if (i % display_mem_size == display_mem_size-1)
-        {
-            printf("%02x\n", mem[i]);
-            if (i != mem_size - 1)
-            {
-                printf("0x%04x  ", i + 1);
-            }
-        }
-        else
-        {
-            printf("%02x ", mem[i]);
-        }
+        printf("Not Exist File mem.bin\n");
+    }
+    else
+    {
+        fwrite(mem,1,mem_size,fp);
+        fclose(fp);
     }
 
-    printf("-----Memory Dump (offset:0x%04x) End-----\n", offset);
+    // printf("-----Memory Dump (offset:0x%04x)-----\n", offset);
+    // printf("0x%04x  ", i);
+
+    // for (; i < mem_size; i++)
+    // {
+    //     if (i % display_mem_size == display_mem_size-1)
+    //     {
+    //         printf("%02x\n", mem[i]);
+    //         if (i != mem_size - 1)
+    //         {
+    //             printf("0x%04x  ", i + 1);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         printf("%02x ", mem[i]);
+    //     }
+    // }
+
+    // printf("-----Memory Dump (offset:0x%04x) End-----\n", offset);
 }
 
 void printreg()
@@ -436,7 +447,7 @@ int main(int argc, char const *argv[])
             while (1)
             {
                 exeop();
-                // printmem(0x0000);
+                printmem();
                 printreg();
                 printf("\033[2J");
                 printf("\033[H");
