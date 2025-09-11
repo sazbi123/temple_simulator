@@ -32,8 +32,11 @@ int main(int argc, char const *argv[])
 
     while (fgets(data, data_size, fp) != NULL)
     {
-        wdata = ((data[0] - '0') * 128) + ((data[1] - '0') * 64) + ((data[2] - '0') * 32) + ((data[3] - '0') * 16) + ((data[4] - '0') * 8) + ((data[5] - '0') * 4) + ((data[6] - '0') * 2) + ((data[7] - '0') * 1);
-        fwrite(&wdata, 1, 1, fp_w);
+        if (data[0]=='1' || data[0]=='0')
+        {
+            wdata = ((data[0] - '0') * 128) + ((data[1] - '0') * 64) + ((data[2] - '0') * 32) + ((data[3] - '0') * 16) + ((data[4] - '0') * 8) + ((data[5] - '0') * 4) + ((data[6] - '0') * 2) + ((data[7] - '0') * 1);
+            fwrite(&wdata, 1, 1, fp_w);
+        }
     }
 
     fclose(fp);
