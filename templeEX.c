@@ -354,9 +354,9 @@ void exeop()
     case 0x2:
         printf("LD\n");
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
-        printf("mX:%01x\n", mX);
+        // printf("mX:%01x\n", mX);
         acc = mem[regfile[mX]]+mem[regfile[mX]+1]*0x100;
-        printf("acc:%04x\n", acc);
+        // printf("acc:%04x\n", acc);
         pc = pc + 1;
         break;
     case 0x3:
@@ -371,6 +371,7 @@ void exeop()
         autoassign('F', &mX, &mY, &cond, &interrupt, &immeditate, bits, 1);
         // printf("mX:%01x\n", mX);
         mem[regfile[mX]] = acc;
+        mem[regfile[mX]+1] = acc>>8;
         pc = pc + 1;
         break;
     case 0x5:
