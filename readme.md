@@ -1,4 +1,4 @@
-# TempleEX simulater
+# TempleEX simulater（stdio.h縛り）
 
 templeEX.c : 本体、バイナリファイルのみ使用できる。
 
