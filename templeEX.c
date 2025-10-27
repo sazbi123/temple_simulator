@@ -144,7 +144,7 @@ void autoassign(char type, unsigned char *mX, unsigned char *mY, unsigned char *
         switch (count)
         {
         case 1:
-            *interrupt = data[4] * 8 + data[3] * 8 + data[2] * 4 + data[1] * 2 + data[0];
+            *interrupt = data[4] * 16 + data[3] * 8 + data[2] * 4 + data[1] * 2 + data[0];
             break;
         case 2:
             *immediate = data[7] * 128 + data[6] * 64 + data[5] * 32 + data[4] * 16 + data[3] * 8 + data[2] * 4 + data[1] * 2 + data[0];
